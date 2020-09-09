@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function Movie({ name, picture }) {
   return (
@@ -48,8 +49,8 @@ function App() {
 
 Movie.propTypes = {
   name: PropTypes.string.isRequired,
-  picture: propTypes.string.isRequired,
-  rating: propTypes.number,
+  picture: PropTypes.string.isRequired,
+  rating: PropTypes.number,
 };
 
 export default App;
