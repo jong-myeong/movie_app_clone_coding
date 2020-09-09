@@ -159,7 +159,7 @@ function Movie({ fav }) {
   return <h3>I love { fav }</h3>;
 }
 ```
-1. 여러 개의 컴포넌트에 props 사용  
+3. 여러 개의 컴포넌트에 props 사용  
 
 :file_folder: ./src/App.js
 ```javascript
@@ -186,7 +186,7 @@ export default App;
 ##### 1. map 함수
 **map 함수** : 배열의 모든 원소마다 특정 작업을 하는 함수를 적용하고, 그 함수가 반환한 결과를 모아서 배열로 반환해준다
 
-map 함수 예제
+<map 함수 예제>
 ```javascript
 const movieList = ["Iron Man", "Captain America", "Spider Man", "Avengers"];
 
@@ -195,7 +195,7 @@ movieList.map(current => {
   return 0;
 })
 ```
-결과
+<결과>
 ```
 Iron Man          // console.log(current)가 출력한 첫 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
 Captain America   // console.log(current)가 출력한 두 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
