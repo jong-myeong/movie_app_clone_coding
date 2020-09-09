@@ -27,7 +27,7 @@ create-react-app은 리액트 개발을 바로 시작할 수 있도록 프로젝
 
 명령 프롬프트를 실행한 후 리액트 앱을 만들고 싶은 곳으로 이동해서
 `npx create-react-app 원하는 이름` 으로 리액트 앱 만들기
-##### package.json 파일 수정
+##### 1. package.json 파일 수정
 package.json 파일에서 test와 eject 명령어는 사용하지 않으니 삭제
 ```javascript
  "scripts": {
@@ -74,7 +74,7 @@ function Movie() {
 }
 
 // 컴포넌트 이름으로 export
-export default Potato;
+export default Movie;
 ```
 ##### 2. JSX
 JSX는 JavaScript와 HTML의 조합한 문법이다.
@@ -233,7 +233,7 @@ function Movie({ name, picture }) {
   return (
   <div>
     <h2>I love { name }</h2>
-    <img src={ image } />
+    <img src={ picture } />
   </div>
   );
 }
@@ -249,6 +249,156 @@ function App() {
   </div>
   );
 }
+
+export default App;
+```
+##### 3. map 함수로 만든 컴포넌트에 key props 추가하기
+현재 콘솔 창에는 두 가지 메시지가 있을 것이다.
+```
+> Warning: Each child in a list should have a unique "key" prop,
+(생략...)
+```
+```
+> img elements must have an alt prop,
+(생략...)
+```
+이 두 메시지를 해결하기 위해 moviesILike 배열 원소에 id 값을 추가하고 img 엘리먼트에 alt 속성을 추가한다
+
+배열 내 데이터에 id를 추가하는 이유는 리액트는 컴포넌트가 서로 다르다는 걸 알 방법이 없기 때문에 서로 다르다는 것을 알려주기 위해 컴포넌트에 key props를 추가해야 한다.
+
+:file_folder: ./src/App.js
+```javascript
+function Movie({ name, picture }) {
+  return (
+  <div>
+    <h2>I love { name }</h2>
+    // alt 속성 추가
+    <img src={ picture } alt={ name }/>
+  </div>
+  );
+}
+
+// id 값 추가
+const moviesILike = [
+  {
+    id: 1,
+    name: "Iron Man",
+    image: "imgae URL"
+  },
+  {
+    id: 2,
+    name: "Captain America",
+    image: "imgae URL"
+  },
+  {
+    id: 3,
+    name: "Spider Man",
+    image: "imgae URL"
+  },
+  {
+    id: 4,
+    name: "Avengers",
+    image: "imgae URL"
+  },
+];
+
+function App() {
+  return (
+  <div>
+    {moviesILike.map(movie => (
+      // key props 추가
+      <Movie key={movie.id} name={movie.name} picture={movie.image} />
+    ))}
+  </div>
+  );
+}
+```
+##### 4. props 검사하는 방법
+우리가 정의한 props의 값이 컴포넌트에 제대로 전달되지 않으면 우리가 원하는 대로 앱이 작동하지 않을 것이다. 이런 경우에 props를 검사하는 방법이 필요하다.
+
+예를 들어, 우리가 만들고 있는 Movie 앱에 '평점' 항목을 추가했다고 가정해보자.
+
+:file_folder: ./src/App.js
+```javascript
+// 평점(rating) 값 추가
+const moviesILike = [
+  {
+    id: 1,
+    name: "Iron Man",
+    image: "imgae URL",
+    rating: 5
+  },
+  {
+    id: 2,
+    name: "Captain America",
+    image: "imgae URL",
+    rating: 4.5
+  },
+  {
+    id: 3,
+    name: "Spider Man",
+    image: "imgae URL",
+    rating: 4.8
+  },
+  {
+    id: 4,
+    name: "Avengers",
+    image: "imgae URL",
+    rating: 4.9
+  },
+];
+```
+props 자료형 검사를 위해 prop-types를 설치해야 한다.
+- prop-types 설치 :point_right: 명령 프롬프트에서 `npm install prop-types`
+
+**prop-types 적용하기**
+
+:file_folder: ./src/App.js
+```javascript
+import React from 'react';
+// PropTypes import
+import PropTypes from 'prop-types';
+
+// Movie 컴포넌트에서 rating props 사용
+function Movie({ name, picture, rating }) {
+  return (
+  <div>
+    <h2>I love { name }</h2>
+    <h4>{ rating }/5.0</h4>
+    <img src={ picture } alt={ name }/>
+  </div>
+  );
+}
+
+const moviesILike = [
+  {
+    id: 1,
+    name: "Iron Man",
+    image: "imgae URL",
+    rating: 5
+  },
+  // (생략...)
+];
+
+function App() {
+  return (
+  <div>
+    {moviesILike.map(movie => (
+      // Movie 컴포넌트에 rating props 추가
+      <Movie key={movie.id} name={movie.name} picture={movie.image} rating={movie.rating} />
+    ))}
+  </div>
+  );
+}
+
+// prop-types 적용
+Movie.propTypes = {
+  // .isRequired : 반드시 필요
+  name: PropTypes.string.isRequired,
+  picture: propTypes.string.isRequired,
+  // 반드시 필요하지 않으면 생략 가능
+  rating: propTypes.number,
+};
 
 export default App;
 ```
