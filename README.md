@@ -1,7 +1,7 @@
 # 클론코딩 영화 평점 웹사이트
 ![클론코딩영화평점웹서비스](https://user-images.githubusercontent.com/52479435/92557612-8ac75180-f2a7-11ea-9ebd-11590d0619c9.png)
   
-## 목차
+### 목차
 1. 안녕 리액트?
 2. 리액트로 클론 코딩 시작하기
 3. 리액트 기초 개념 알아보기
@@ -10,18 +10,18 @@
 6. 영화 앱 만들기
 7. 영화 앱 다듬기
 8. 영화 앱에 여러 기능 추가하기
-
-### Chapter1. 안녕 리액트?
+---
+#### Chapter1. 안녕 리액트?
 ##### 수업 준비
 - Node.js 설치 확인
 명령 프롬프트에서 `node -v`
 - Node.js 설치 :point_right: <https://nodejs.org>
-- [npm](https://ko.wikipedia.org/wiki/Npm_(%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4)) 설치 확인
+- [npm](https://ko.wikipedia.org/wiki/Npm_(%EC%86%8C%ED%94%84%ED%8A%B8%EC%9B%A8%EC%96%B4)) 설치 확인<br>
 명령 프롬프트에서 `npm -v`
-- [npx](https://geonlee.tistory.com/32) 설치하기
+- [npx](https://geonlee.tistory.com/32) 설치하기<br>
 명령 프롬프트에서 `npm install npx -g`
 
-### Chapter2. 리액트로 클론 코딩 시작하기
+#### Chapter2. 리액트로 클론 코딩 시작하기
 ##### create-react-app
 create-react-app은 리액트 개발을 바로 시작할 수 있도록 프로젝트 구조 작업, 설정 작업 등을 자동으로 진행해주는 도구
 *실행*
@@ -58,6 +58,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+// ID가 root인 element에 App component를 그린다
 ReactDOM.render(<App />, document.getElementById('root'));
-\\<!-- ID가 root인 element에 App component를 그린다 -->
 ```
