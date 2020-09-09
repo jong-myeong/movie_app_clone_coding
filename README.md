@@ -10,7 +10,7 @@
 6. 영화 앱 만들기
 7. 영화 앱 다듬기
 8. 영화 앱에 여러 기능 추가하기
----
+
 ### Chapter1. 안녕 리액트?
 ##### 수업 준비
 - Node.js 설치 확인
@@ -22,7 +22,9 @@
 ### Chapter2. 리액트로 클론 코딩 시작하기
 ##### 1. create-react-app
 create-react-app은 리액트 개발을 바로 시작할 수 있도록 프로젝트 구조 작업, 설정 작업 등을 자동으로 진행해주는 도구
-*실행*
+
+**실행**
+
 명령 프롬프트를 실행한 후 리액트 앱을 만들고 싶은 곳으로 이동해서
 `npx create-react-app 원하는 이름` 으로 리액트 앱 만들기
 ##### package.json 파일 수정
@@ -31,8 +33,8 @@ package.json 파일에서 test와 eject 명령어는 사용하지 않으니 삭�
  "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",       // 삭제
-    "eject": "react-scripts eject"      // 삭제
+    "test": "react-scripts test",     // 삭제
+    "eject": "react-scripts eject"    // 삭제
   },
 ```
 ##### 2. 리액트 앱 실행하기
@@ -84,6 +86,7 @@ function Movie() {
 ```
 ##### 3. 컴포넌트 사용
 1. import 해서 사용  
+
 :file_folder: ./src/App.js
 ```javascript
 import Movie from './Movie';
@@ -91,7 +94,6 @@ import Movie from './Movie';
 function App() {
   return (
   <div>
-    <h1>Hello</h1>
     // App 컴포넌트 반환값으로 Movie 컴포넌트 추가
     <Movie />
   </div>
@@ -99,6 +101,7 @@ function App() {
 }
 ```
 2. 같은 파일 내에 컴포넌트 정의해서 사용  
+
 :file_folder: ./src/App.js
 ```javascript
 import React from 'react';
@@ -110,7 +113,6 @@ function Movie() {
 function App() {
   return (
   <div>
-    <h1>Hello</h1>
     <Movie />
   </div>
   );
@@ -118,10 +120,11 @@ function App() {
 
 export default App;
 ```
-##### 3. props
+##### 4. props
 props는 컴포넌트에서 컴포넌트로 전달하는 데이터를 말한다. 함수의 매개변수와 비슷한 개념이라고 생각할 수 있다.  
 props를 사용하면 컴포넌트를 효율적으로 사용할 수 있다.
-1. props로 컴포넌트에 데이터 전달하기
+1. props로 컴포넌트에 데이터 전달하기  
+
 :file_folder: ./src/App.js
 ```javascript
 function Movie(props) {
@@ -141,7 +144,8 @@ function App() {
 
 export default App;
 ```
-2. 구조분해 할당으로 props 사용 - ES6 문법
+2. 구조분해 할당으로 props 사용 - ES6
+
 :file_folder: ./src/App.js
 ```javascript
 function Movie(props) {
@@ -155,11 +159,12 @@ function Movie({ fav }) {
   return <h3>I love { fav }</h3>;
 }
 ```
-3. 여러 개의 컴포넌트에 props 사용
+1. 여러 개의 컴포넌트에 props 사용  
+
 :file_folder: ./src/App.js
 ```javascript
 function Movie({ fav }) {
-  return <h3>I love {fav }</h3>;
+  return <h3>I love { fav }</h3>;
 }
 
 function App() {
@@ -170,6 +175,77 @@ function App() {
     <Movie fav="Captain America"/>
     <Movie fav="Spider Man"/>
     <Movie fav="Avengers"/>
+  </div>
+  );
+}
+
+export default App;
+```
+
+### Chapter4. 슈퍼 똑똑하게 컴포넌트 만들기
+##### 1. map 함수
+**map 함수** : 배열의 모든 원소마다 특정 작업을 하는 함수를 적용하고, 그 함수가 반환한 결과를 모아서 배열로 반환해준다
+
+map 함수 예제
+```javascript
+const movieList = ["Iron Man", "Captain America", "Spider Man", "Avengers"];
+
+movieList.map(current => {
+  console.log(current);
+  return 0;
+})
+```
+결과
+```
+Iron Man          // console.log(current)가 출력한 첫 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
+Captain America   // console.log(current)가 출력한 두 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
+Spider Man        // console.log(current)가 출력한 세 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
+Avengers          // console.log(current)가 출력한 네 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
+
+[0, 0, 0, 0]      // movieList.map의 최종 반환값
+```
+##### 2. map 함수로 컴포넌트 여러 개 만들기
+
+:file_folder: ./src/App.js
+```javascript
+// 영화 제목과 포스터 URL을 담은 배열 생성
+const moviesILike = [
+  {
+    name: "Iron Man",
+    image: "imgae URL"
+  },
+  {
+    name: "Captain America",
+    image: "imgae URL"
+  },
+  {
+    name: "Spider Man",
+    image: "imgae URL"
+  },
+  {
+    name: "Avengers",
+    image: "imgae URL"
+  },
+];
+
+// Movie 컴포넌트에서 name props와 picture props 사용
+function Movie({ name, picture }) {
+  return (
+  <div>
+    <h2>I love { name }</h2>
+    <img src={ image } />
+  </div>
+  );
+}
+
+function App() {
+  return (
+  <div>
+    // create-react-app를 통해 만든 app에서 map 함수를 사용할 때는 함수 안에 {} 대신 ()를 사용한다
+    {moviesILike.map(movie => (
+      // Movie 컴포넌트에 name props와 picture props 추가
+      <Movie name={movie.name} picture={movie.image} />
+    ))}
   </div>
   );
 }
