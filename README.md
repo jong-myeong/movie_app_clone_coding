@@ -128,7 +128,7 @@ props를 사용하면 컴포넌트를 효율적으로 사용할 수 있다.
 :file_folder: ./src/App.js
 ```javascript
 function Movie(props) {
-  // ② 중괄호로 감싸서 props.fav를 화면에 출력
+  // 2) 중괄호로 감싸서 props.fav를 화면에 출력
   return <h3>I love { props.fav }</h3>;
 }
 
@@ -136,7 +136,7 @@ function App() {
   return (
   <div>
     <h1>Hello</h1>
-    // ① fav라는 이름의 props 추가
+    // 1) fav라는 이름의 props 추가
     <Movie fav="Iron Man"/>
   </div>
   );
@@ -546,3 +546,117 @@ class App extends React.Component {
 `setState()` :arrow_right: `render()` :arrow_right: `componentDidUpdate()` 순서로 실행된다
 
 ④ componentWillUnmount() 함수 : 컴포넌트가 화면에서 떠날 때 실행되는 함수. 주로 컴포넌트에 적용한 이벤트 리스너를 제거할 때 많이 사용한다
+
+### 6. 영화 앱 만들기
+
+##### 1. 영화 앱 만들기 워밍업
+
+:file_folder: ./src/App.js
+```javascript
+import React from 'react';
+
+class App extends React.Component {
+  state = {
+    // 영화 로딩 상태
+    isLoading: true,
+    // 영화 데이터 받을 배열 미리 생성
+    movies: [],
+  };
+
+  componentDidMount() {
+    // 6초 뒤 영화 데이터가 다 불러와진다고 가정하고 setState() 함수 실행
+    setTimeout(() => {
+      this.setState({ isLoading: false });
+    }, 6000);
+  }
+
+  render() {
+    // 구조 분해 할당을 통해 isLoading을 this.state를 입력하지 않고 사용할 수 있다
+    const { isLoading } = this.state;
+    return <div>{ isLoading ? 'Loading...' : 'We are ready'}</div>
+  }
+}
+
+export default App;
+```
+
+##### 2. 영화 API 사용하기
+영화 데이터를 로딩하려면 자바스크립트의 fetch()라는 함수가 필요하지만, fetch()는 이 책의 범위를 넘어가므로 axios를 사용해서 영화 앱을 만든다
+
+① axios 설치하기
+
+명령 프롬프트에서 `npm install axios`
+
+② 노마드 코더 영화 API를 영화 앱에서 호출하기
+
+📁 ./src/App.js
+```javascript
+import React from 'react';
+// axios import
+import axios from 'axios';
+
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+
+  componentDidMount() {
+    // axios로 노마드 코더 영화 API 호츨
+    axios.get('https://yts-proxy.now.sh/list_movies_json')
+  }
+
+  // (생략...)
+```
+
+③ 영화 API 호출하는 함수를 만들고 aync await 으로 영화 API로 얻은 데이터 잡기
+
+📁 ./src/App.js
+```javascript
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+
+  // 2) async 를 통해 getMoives 함수는 시간이 필요하다는 것을 알린다
+  getMovies = async () => {
+    // 3) await 을 통해 axios.get의 실행이 완료될 때까지 기다려야 한다는 것을 알린다
+    const movies = await axios.get('https://yts-proxy.now.sh/list_movies_json');
+  }
+
+  // 1) getMoives 함수는 영화 데이터가 다 불러와진 후에 실행되어야 한다
+  componentDidMount() {
+    this.getMovies();
+  }
+
+  // (생략...)
+}
+```
+
+##### 3. 영화 데이터 화면에 그리기
+
+영화 API로 얻은 데이터에서 우리가 필요한 영화 데이터 객체는  
+data > data > moives 순서로 접근해서 추출할 수 있다 👉 `movies.data.data.movies`
+
+하지만 이런 방법으로 객체에 접근하는 것은 복잡하다. 구조 분해 할당을 활용하면 편하게 접근할 수 있다
+
+그리고 setState를 통해 movies state에 영화 데이터를 저장하고, isLoading을 false로 업데이트한다
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+getMovies = async () => {
+  // 구조 분해 할당
+  const {
+    data: {
+      data: { movies },
+    },
+  } = await axios.get("https://yts-proxy.now.sh/list_movies_json");
+  // state에 데이터 저장
+  // this.setState({ movies: movies })로 작성해야 하지만 ES6에서는 키와 대입할 변수 이름이 같으면 축약 가능
+  this.setState({ movies, isLoading: false })
+}
+// (생략...)
+```
+##### 4. Movie 컴포넌트 만들기
