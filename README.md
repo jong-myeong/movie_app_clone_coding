@@ -402,3 +402,147 @@ Movie.propTypes = {
 
 export default App;
 ```
+
+### 5. state와 클래스형 컴포넌트
+##### 1. 클래스형 컴포넌트
+
+클래스형 컴포넌트는 React.Component 클래스를 상속해서 만들어진다.
+
+함수형 컴포넌트와 다르게 return 문이 JSX를 반환하지 않고, render() 함수가 JSX를 반환한다. 이것은 클래스형 컴포넌트가 render() 함수를 자동으로 실행시키기 때문이다.
+
+기존에 있었던 코드를 지우고 아래 코드만 남겨서 클래스형 컴포넌트를 사용해보자.
+
+:file_folder: ./src/App.js
+```javascript
+import React from 'react';
+
+// App 클래스는 React.Component 클래스를 상속
+class App extends React.Component {
+  // render() 함수가 JSX를 반환
+  render() {
+    return <h1>I'm a class compnent.</h1>l
+  }
+}
+
+export default App;
+```
+
+##### 2. state
+state는 클래스형 컴포넌트에서 동적 데이터를 다루기 위해 사용되는 '객체'이다.
+
+state를 사용하려면 반드시 클래스형 컴포넌트 안에서 소문자를 이용하여 state라고 적어야 한다.
+
+state는 render() 함수에서 {this.state.변수명} 형식으로 사용할 수 있다.
+```javascript
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+
+  render() {
+    return <h1>The number is { this.state.count }</h1>
+  };
+}
+```
+
+##### 3. 버튼으로 숫자 증감 기능 만들기
+state 데이터 다루는 연습을 위해 버튼을 눌러 숫자를 증감시키는 예제를 만들어보자
+
+:file_folder: ./src/App.js
+```javascript
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+
+  add = () => {
+    this.state.count++;
+  }
+  
+  minus = () => {
+    this.state.count--;
+  }
+
+  render() {
+    return (
+    <div>
+      <h1>The number is { this.state.count }</h1>
+      <button onClick={ this.add }></button>
+      <button onClick={ this.minus }></button>
+    </div>
+    );
+  }
+}
+```
+
+위와 같은 방식으로 state의 데이터를 동적으로 바꿀 수 있을 것이라 생각했겠지만, 리액트에서 state는 특별하게 다뤄야 한다.
+
+리액트는 state가 변경되면 render() 함수를 다시 실행하여 변경된 state를 화면에 출력한다. 하지만 state를 직접 변경하는 경우에는 render() 함수를 다시 실행하지 않는다.
+
+현재 콘솔에 이런 경고 메시지가 있을 것이다.
+
+```
+> Do not mutate state directly. Use setState()
+```
+즉, setState() 통해 state의 데이터를 바꿀 수 있다.
+
+:file_folder: ./src/App.js
+```javascript
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+
+  add = () => {
+    this.setState({ count: this.state.count + 1 });
+  }
+  
+  minus = () => {
+    this.setState({ count: this.state.count - 1});
+  }
+
+  // (생략...)
+}
+```
+앱을 실행하면 잘 동작하지만, `count: this.state.count + 1` 방식으로 코드를 작성하여 state를 업데이트 하는 방법은 성능 문제가 생길 수 있어 좋지 않다.
+
+setState() 함수의 인자로 함수를 전달하면 성능 문제 없이 state를 업데이트 할 수 있다.
+
+:file_folder: ./src/App.js
+```javascript
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+
+  add = () => {
+    // current에 현재 state가 넘어온다
+    this.setState(current => ({
+      // current로 넘어온 state의 count의 값에 1을 더한다
+      count: current.count + 1
+    }));
+  }
+
+  minus = () => {
+    this.setState(current => ({
+      count: current.count - 1
+    }));
+  }
+
+  // (생략...)
+}
+```
+
+##### 4. 클래스형 컴포넌트 생명주기 함수
+
+① constructor() 함수 : 클래스형 컴포넌트의 생명주기 함수는 아니지만 클래스형 컴포넌트가 생성될 때 호출되는 함수
+
+② componentDidMount() 함수 : 컴포넌트가 처음 화면에 그려지면 실행되는 함수
+
+`constructor()` :arrow_right: `render()` :arrow_right: `componentDidMount()` 순서로 실행된다
+
+③ componentDidUpdate() 함수 : 화면이 업데이트 되면 실행되는 함수
+
+`setState()` :arrow_right: `render()` :arrow_right: `componentDidUpdate()` 순서로 실행된다
+
+④ componentWillUnmount() 함수 : 컴포넌트가 화면에서 떠날 때 실행되는 함수. 주로 컴포넌트에 적용한 이벤트 리스너를 제거할 때 많이 사용한다
