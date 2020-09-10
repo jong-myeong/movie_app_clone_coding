@@ -1,56 +1,31 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-function Movie({ name, picture }) {
-  return (
-  <div>
-    <h2>I love { name }</h2>
-    <img src={ picture } alt={ name }/>
-  </div>
-  );
+class App extends React.Component {
+  state = {
+    count: 0,
+  };
+
+  add = () => {
+    this.setState(current => ({
+      count: current.count + 1
+    }));
+  }
+  
+  minus = () => {
+    this.setState(current => ({
+      count: current.count - 1
+    }));
+  }
+
+  render() {
+    return (
+    <div>
+      <h1>The number is { this.state.count }</h1>
+      <button onClick={ this.add }></button>
+      <button onClick={ this.minus }></button>
+    </div>
+    );
+  }
 }
-
-const moviesILike = [
-  {
-    id: 1,
-    name: "Iron Man",
-    image: "https://images-na.ssl-images-amazon.com/images/I/71lVAGaqBtL._AC_SY879_.jpg",
-    rating: 5,
-  },
-  {
-    id: 2,
-    name: "Captain America",
-    image: "https://www.bestmovieposters.co.uk/wp-content/uploads/2019/01/9j2Fy3gE-1.jpeg",
-    rating: 4.5
-  },
-  {
-    id: 3,
-    name: "Spider Man",
-    image: "https://images-na.ssl-images-amazon.com/images/I/51UL0SttePL._AC_.jpg",
-    rating: 4.8
-  },
-  {
-    id: 4,
-    name: "Avengers",
-    image: "https://images-na.ssl-images-amazon.com/images/I/A1t8xCe9jwL._AC_SL1500_.jpg",
-    rating: 4.9
-  },
-];
-
-function App() {
-  return (
-  <div>
-    {moviesILike.map(movie => (
-      <Movie key={movie.id} name={movie.name} picture={movie.image} />
-    ))}
-  </div>
-  );
-}
-
-Movie.propTypes = {
-  name: PropTypes.string.isRequired,
-  picture: PropTypes.string.isRequired,
-  rating: PropTypes.number,
-};
 
 export default App;
