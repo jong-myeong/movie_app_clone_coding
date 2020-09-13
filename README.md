@@ -687,7 +687,7 @@ export default Movie;
 
 ② API에 구현되어 있는 정렬 기능을 사용해서 평점 순으로 데이터 보여주기
 
-axios.gete()에 'yts-proxy.now.sh/list_movies_json?sort_by=rating' 을 전달한다
+axios.get()에 'yts-proxy.now.sh/list_movies_json?sort_by=rating' 을 전달한다
 
 ```javascript
 // (생략...)
@@ -816,4 +816,190 @@ function Movie({ title, year, summary, poster }) {
   );
 }
 // (생략...)
+```
+
+### 7. 영화 앱 다듬기
+
+##### 1. 영화 앱 전체 모습 수정하기
+
+영화 API에서 장르 키를 영화 앱에 추가하기 위해 Movie 컴포넌트에 genres props 넘겨주기
+
+📁 ./src/Movie.js
+```javascript
+// genres props 넘겨주기
+function Movie({ title, year, summary, poster, genres }) {
+  // (생략...)
+}
+
+Movie.propTypes = {
+  // (생략...)
+  // genres의 prop-type 추가
+  genres: PropTypes.arrayOf(PropTypes).isRequired,
+};
+```
+
+App 컴포넌트에서 Movie 컴포넌트로 genres props 전달
+
+📁 ./src/App.js
+```javascript
+render() {
+  // (생략...)
+  return (
+    <Movie 
+      key={movie.id}
+      id={movie.id}
+      year={movie.year}
+      title={movie.title}
+      summary={movie.summary}
+      poster={movie.medium_cover_image}
+      // genres props 전달
+      genres={movie.genres}
+    />
+  )
+}
+```
+
+현재 콘솔창에는 `Warning: Invalid DOM property 'class'. Did you mean 'className'?` 이라는 경고 메시지가 보일 것이다.
+
+이것은 JSX 때문이다. HTML의 class와 자바스크림트의 class라는 이름이 겹치면 리액트가 혼란스러울 수 있으므로 하나는 다른 이름을 써야한다. Movie.js와 App.js의 class 속성을 className 속성으로 바꿔준다.
+
+📁 ./src/Movie.js
+```javascript
+function Movie({ title, year, summary, poster, genres }) {
+  return (
+    <div className="movie">
+      <img src={poster} alt={title} title={title} />
+      <div className="movie__data">
+        <h3 className="movie__title">{title}</h3>
+        <h5 className="movie__year">{year}</h5>
+        <p className="movie__summary">{summary}</p>
+      </div>
+    </div>
+  );
+}
+```
+
+이제 Movie 컴포넌트에서 장르를 출력하도록 코드를 수정해야 한다. genres props가 배열이므로 map()함수를 사용해 ul, li 엘리먼트로 감싸 출력한다.
+
+이때, 장르 배열은 API에서 id와 같은 값을 매겨 주지 않는다. 그래서 li 엘리먼트에 key props를 추가하지 않으면 콘솔창에  
+`Warning: Each child in a list should have a unique "key" prop.` 메시지가 출력된다.
+
+이런 경우엔 map() 함수에 전달할 함수에 두 번째 인자를 전달하면 된다. map() 함수에 전달할 함수의 2번째 인자에는 map() 함수가 반복 실행하며 반환할 배열 원소의 인덱스가 자동으로 들어오게 된다. 이 값을 이용 하면 key props를 손쉽게 추가할 수 있다.
+
+📁 ./src/Movie.js
+```javascript
+function Movie({ title, year, summary, poster, genres }) {
+  return (
+    <div className="movie">
+      <img src={poster} alt={title} title={title} />
+      <div className="movie__data">
+        <h3 className="movie__title">{title}</h3>
+        <h5 className="movie__year">{year}</h5>
+        <ul className="movie__genres">
+          // genre에는 genres의 배열 원소가 전달되고
+          // index 자리에 1,2,3번째 임을 알리는 숫자가 전달된다
+          {genres.map((genre, index)=> {
+            // li 엘리먼트에 key props로 index를 전달한다
+            return <li key={index} className="movie__genre">{genre}</li>;
+          })}
+        </ul>
+        <p className="movie__summary">{summary}</p>
+      </div>
+    </div>
+  );
+}
+```
+
+##### 2. 영화 앱 스타일링하기
+
+App.css 파일 수정
+
+📁 ./src/App.css
+```css
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: #eff3f7;
+  height: 100%;
+}
+```
+
+📁 ./src/Movie.css
+```css
+.movies .movie {
+  width: 45%;
+  background-color: white;
+  margin-bottom: 70px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  font-weight: 300;
+  padding: 20px;
+  border-radius: 5px;
+  color: #adaeb9;
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}
+
+.movie img {
+  position: relative;
+  top: -50px;
+  max-width: 150px;
+  margin-right: 30px;
+  box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
+      0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+}
+
+.movie .movie__title,
+.movie .movie__year {
+  margin: 0;
+  font-weight: 300;
+}
+
+.movie .movie__title {
+  margin-bottom: 5px;
+  font-size: 24px;
+  color: #2c2c2c;
+}
+
+.movie .movie__genres {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  margin: 5px 0px;
+}
+
+.movie__genres li,
+.movie .movie__year {
+  margin-right: 10px;
+  font-size: 14px;
+}
+```
+
+시놉시스 180자로 제한하기
+
+📁 ./src/Movie.js
+```javascript
+function Movie({ title, year, summary, poster, genres }) {
+  return (
+    // (생략...)
+    // slice() 함수를 사용해서 시놉시스를 180자로 제한
+    <p className="movie__summary">{summary.slice(0, 180)}...</p>
+  );
+}
+```
+
+영화 앱 제목 바꾸기
+
+📁 ./public/index.html
+```html
+<!-- 생략 -->
+<title>Movie App</title>
+<!-- 생략 -->
 ```
