@@ -609,7 +609,7 @@ class App extends React.Component {
   // (생략...)
 ```
 
-③ 영화 API 호출하는 함수를 만들고 aync await 으로 영화 API로 얻은 데이터 잡기
+③ 영화 API 호출하는 함수를 만들고 `async`와 `await`으로 영화 API로 얻은 데이터 잡기
 
 📁 ./src/App.js
 ```javascript
@@ -660,3 +660,160 @@ getMovies = async () => {
 // (생략...)
 ```
 ##### 4. Movie 컴포넌트 만들기
+
+① src 폴더에 Movie.js 파일을 새로 만들고 Movie 컴포넌트를 만든다
+
+📁 ./src/Movie.js
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
+
+// 함수형 컴포넌트로 작성하고 props를 넘겨준다
+function Movie({ title, year, summary, poster }) {
+  return <h4>{ title }</h4>;
+}
+
+// Movie.propTypes 작성
+// 자료형에 주의하면서 props를 추가한다
+Movie.propTypes = {
+  year: PropTypes.number.isRequired,
+  title: PropTypes.string.isRequired,
+  summary: PropTypes.string.isRequired,
+  poster: PropTypes.string.isRequired,
+};
+
+export default Movie;
+```
+
+② API에 구현되어 있는 정렬 기능을 사용해서 평점 순으로 데이터 보여주기
+
+axios.gete()에 'yts-proxy.now.sh/list_movies_json?sort_by=rating' 을 전달한다
+
+```javascript
+// (생략...)
+getMovies = async () => {
+    const {
+      data: {
+        data: { movies },
+      },
+    } = await axios.get('https://yts-proxy.now.sh/list_movies_json?sort_by=rating');
+    this.setState({ movies, isLoading: false })
+  };
+// (생략...)
+```
+
+③ App 컴포넌트에서 Movie 컴포넌트 그리기
+
+구조 분해 할당으로 this.state에 있는 movies를 얻은 다음, App 컴포넌트에서 movies.map()을 사용하여 Movie 컴포넌트를 반환하도록 한다
+
+📁 ./src/App.js
+```javascript
+import React from 'react';
+import axios from 'axios';
+// Movie 컴포넌트 import
+import Movie from './Movie';
+
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: [],
+  };
+
+  getMovies = async () => {
+    const {
+      data: {
+        data: { movies },
+      },
+    } = await axios.get('https://yts-proxy.now.sh/list_movies_json?sort_by=rating');
+    this.setState({ movies, isLoading: false })
+  };
+
+  componentDidMount() {
+    this.getMovies();
+  }
+
+  render() {
+    // 구조 분해 할당으로 this.state에 있는 movies를 얻는다
+    const { isLoading, movies } = this.state;
+    return (
+    <div>
+      { isLoading 
+      ? 'Loading...' 
+      : movies.map((movie) => {
+        // Movie 컴포넌트 반환
+        return (
+          <Movie
+            // Movie 컴포넌트에 props 전달
+            key={movie.id}
+            id={movie.id}
+            year={movie.year}
+            title={movie.title}
+            summary={movie.summary}
+            poster={movie.medium_cover_image}
+          />
+        );
+      })}
+    </div>
+    )
+  }
+}
+
+export default App;
+```
+
+##### 5. 영와 앱 스타일링하기 - 기초
+
+App 컴포넌트에 HTML 추가하기
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+render() {
+  const { isLoading, movies } = this.state;
+  return (
+  <section class="container">
+    { isLoading ? ( 
+      <div class="loader">
+        <span class="loader__text">Loading...</span>
+      </div>
+    ) : (
+      <div class="movies">
+        {movies.map((movie) => {
+          return (
+            <Movie 
+              key={movie.id}
+              id={movie.id}
+              year={movie.year}
+              title={movie.title}
+              summary={movie.summary}
+              poster={movie.medium_cover_image}
+            />
+          )
+        })}
+      </div>
+    )}
+  </section>
+  )
+}
+```
+
+📁 ./src/Movie.js
+```javascript
+import React from 'react';
+import PropTypes from 'prop-types';
+
+function Movie({ title, year, summary, poster }) {
+  return (
+    <div class="movie">
+      // 영화 포스터 이미지 추가
+      <img src={poster} alt={title} title={title} />
+      <div class="movie__data">
+        <h3 class="movie__title">{title}</h3>
+        <h5 class="movie__year">{year}</h5>
+        <p class="movie__summary">{summary}</p>
+      </div>
+    </div>
+  );
+}
+// (생략...)
+```
