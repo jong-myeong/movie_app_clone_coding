@@ -1638,7 +1638,7 @@ location.state가 없으면 render() 함수가 null을 반환하도록 만들어
 ① package.json 수정하기
 
 📁 ./package.json
-```javascript
+```json
 // (생략..)
 "scripts": {
   "start": "react-scripts start",
