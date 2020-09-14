@@ -20,14 +20,18 @@
 - [npx](https://geonlee.tistory.com/32) 설치하기 :point_right: 명령 프롬프트에서 `npm install npx -g`
 
 ### Chapter2. 리액트로 클론 코딩 시작하기
+
 #### 1. create-react-app
-create-react-app은 리액트 개발을 바로 시작할 수 있도록 프로젝트 구조 작업, 설정 작업 등을 자동으로 진행해주는 도구
+
+create-react-app은 리액트 개발을 바로 시작할 수 있도록 프로젝트 구조 작업, 설정 작업 등을 자동으로 진행해주는 도구다
 
 **실행**
 
 명령 프롬프트를 실행한 후 리액트 앱을 만들고 싶은 곳으로 이동해서
 `npx create-react-app 원하는 이름` 으로 리액트 앱 만들기
-#### 1. package.json 파일 수정
+
+#### 2. package.json 파일 수정
+
 package.json 파일에서 test와 eject 명령어는 사용하지 않으니 삭제
 ```javascript
  "scripts": {
@@ -37,11 +41,16 @@ package.json 파일에서 test와 eject 명령어는 사용하지 않으니 삭�
     "eject": "react-scripts eject"    // 삭제
   },
 ```
-#### 2. 리액트 앱 실행하기
+#### 3. 리액트 앱 실행하기
+
 명령 프롬프트에서 루트 폴더로 이동한 다음 `npm start` 입력
-#### 3. src 폴더 정리
+
+#### 4. src 폴더 정리
+
 src 폴더에 App.js, index.js 제외하고 모두 제거
-#### 4. App.js, index.js 수정
+
+#### 5. App.js, index.js 수정
+
 :file_folder: ./src/App.js
 ```javascript
 import React from 'react';
@@ -63,7 +72,11 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 ### Chapter3. 리액트 기초 개념 알아보기
+
 #### 1. 컴포넌트 만들기
+
+컴포넌트는 대문자로 시작하며, 컴포넌트 이름으로 export를 해줘야한다
+
 :file_folder: ./src/Movie.js
 ```javascript
 import React from 'react';
@@ -76,16 +89,22 @@ function Movie() {
 // 컴포넌트 이름으로 export
 export default Movie;
 ```
+
 #### 2. JSX
+
 JSX는 JavaScript와 HTML의 조합한 문법이다.
+
+:file_folder: ./src/Movie.js
 ```javascript
 function Movie() {
   // JSX 문법
   return <h3>I love Movie</h3>;
 }
 ```
+
 #### 3. 컴포넌트 사용
-1. import 해서 사용  
+
+**① import 해서 사용**  
 
 :file_folder: ./src/App.js
 ```javascript
@@ -100,7 +119,8 @@ function App() {
   );
 }
 ```
-2. 같은 파일 내에 컴포넌트 정의해서 사용  
+
+**② 같은 파일 내에 컴포넌트 정의해서 사용**  
 
 :file_folder: ./src/App.js
 ```javascript
@@ -120,10 +140,13 @@ function App() {
 
 export default App;
 ```
+
 #### 4. props
+
 props는 컴포넌트에서 컴포넌트로 전달하는 데이터를 말한다. 함수의 매개변수와 비슷한 개념이라고 생각할 수 있다.  
 props를 사용하면 컴포넌트를 효율적으로 사용할 수 있다.
-1. props로 컴포넌트에 데이터 전달하기  
+
+**① props로 컴포넌트에 데이터 전달하기**  
 
 :file_folder: ./src/App.js
 ```javascript
@@ -144,7 +167,8 @@ function App() {
 
 export default App;
 ```
-2. 구조분해 할당으로 props 사용 - ES6
+
+**② 구조분해 할당으로 props 사용 - ES6**
 
 :file_folder: ./src/App.js
 ```javascript
@@ -159,7 +183,8 @@ function Movie({ fav }) {
   return <h3>I love { fav }</h3>;
 }
 ```
-3. 여러 개의 컴포넌트에 props 사용  
+
+**③ 여러 개의 컴포넌트에 props 사용**
 
 :file_folder: ./src/App.js
 ```javascript
@@ -183,7 +208,9 @@ export default App;
 ```
 
 ### Chapter4. 슈퍼 똑똑하게 컴포넌트 만들기
+
 #### 1. map 함수
+
 **map 함수** : 배열의 모든 원소마다 특정 작업을 하는 함수를 적용하고, 그 함수가 반환한 결과를 모아서 배열로 반환해준다
 
 <map 함수 예제>
@@ -195,6 +222,7 @@ movieList.map(current => {
   return 0;
 })
 ```
+
 <결과>
 ```
 Iron Man          // console.log(current)가 출력한 첫 번째 값 (반환값이 아닌 콘솔창에 보이는 값)
@@ -204,6 +232,7 @@ Avengers          // console.log(current)가 출력한 네 번째 값 (반환값
 
 [0, 0, 0, 0]      // movieList.map의 최종 반환값
 ```
+
 #### 2. map 함수로 컴포넌트 여러 개 만들기
 
 :file_folder: ./src/App.js
@@ -252,8 +281,11 @@ function App() {
 
 export default App;
 ```
+
 #### 3. map 함수로 만든 컴포넌트에 key props 추가하기
+
 현재 콘솔 창에는 두 가지 메시지가 있을 것이다.
+
 ```
 > Warning: Each child in a list should have a unique "key" prop,
 (생략...)
@@ -262,6 +294,7 @@ export default App;
 > img elements must have an alt prop,
 (생략...)
 ```
+
 이 두 메시지를 해결하기 위해 moviesILike 배열 원소에 id 값을 추가하고 img 엘리먼트에 alt 속성을 추가한다
 
 배열 내 데이터에 id를 추가하는 이유는 리액트는 컴포넌트가 서로 다르다는 걸 알 방법이 없기 때문에 서로 다르다는 것을 알려주기 위해 컴포넌트에 key props를 추가해야 한다.
@@ -313,7 +346,9 @@ function App() {
   );
 }
 ```
+
 #### 4. props 검사하는 방법
+
 우리가 정의한 props의 값이 컴포넌트에 제대로 전달되지 않으면 우리가 원하는 대로 앱이 작동하지 않을 것이다. 이런 경우에 props를 검사하는 방법이 필요하다.
 
 예를 들어, 우리가 만들고 있는 Movie 앱에 '평점' 항목을 추가했다고 가정해보자.
@@ -349,7 +384,8 @@ const moviesILike = [
 ];
 ```
 props 자료형 검사를 위해 prop-types를 설치해야 한다.
-- prop-types 설치 :point_right: 명령 프롬프트에서 `npm install prop-types`
+
+명령 프롬프트에서 `npm install prop-types`
 
 **prop-types 적용하기**
 
@@ -404,6 +440,7 @@ export default App;
 ```
 
 ### 5. state와 클래스형 컴포넌트
+
 #### 1. 클래스형 컴포넌트
 
 클래스형 컴포넌트는 React.Component 클래스를 상속해서 만들어진다.
@@ -428,11 +465,14 @@ export default App;
 ```
 
 #### 2. state
+
 state는 클래스형 컴포넌트에서 동적 데이터를 다루기 위해 사용되는 '객체'이다.
 
 state를 사용하려면 반드시 클래스형 컴포넌트 안에서 소문자를 이용하여 state라고 적어야 한다.
 
 state는 render() 함수에서 {this.state.변수명} 형식으로 사용할 수 있다.
+
+📁 ./src/App.js
 ```javascript
 class App extends React.Component {
   state = {
@@ -446,6 +486,7 @@ class App extends React.Component {
 ```
 
 #### 3. 버튼으로 숫자 증감 기능 만들기
+
 state 데이터 다루는 연습을 위해 버튼을 눌러 숫자를 증감시키는 예제를 만들어보자
 
 :file_folder: ./src/App.js
@@ -484,7 +525,8 @@ class App extends React.Component {
 ```
 > Do not mutate state directly. Use setState()
 ```
-즉, setState() 통해 state의 데이터를 바꿀 수 있다.
+
+즉, 직접 state 데이터를 바꾸는 것이 아니라 setState() 통해 state의 데이터를 바꿀 수 있다.
 
 :file_folder: ./src/App.js
 ```javascript
@@ -504,6 +546,7 @@ class App extends React.Component {
   // (생략...)
 }
 ```
+
 앱을 실행하면 잘 동작하지만, `count: this.state.count + 1` 방식으로 코드를 작성하여 state를 업데이트 하는 방법은 성능 문제가 생길 수 있어 좋지 않다.
 
 setState() 함수의 인자로 함수를 전달하면 성능 문제 없이 state를 업데이트 할 수 있다.
@@ -535,17 +578,17 @@ class App extends React.Component {
 
 #### 4. 클래스형 컴포넌트 생명주기 함수
 
-① constructor() 함수 : 클래스형 컴포넌트의 생명주기 함수는 아니지만 클래스형 컴포넌트가 생성될 때 호출되는 함수
+**① constructor() 함수** : 클래스형 컴포넌트의 생명주기 함수는 아니지만 클래스형 컴포넌트가 생성될 때 호출되는 함수
 
-② componentDidMount() 함수 : 컴포넌트가 처음 화면에 그려지면 실행되는 함수
+**② componentDidMount() 함수** : 컴포넌트가 처음 화면에 그려지면 실행되는 함수
 
 `constructor()` :arrow_right: `render()` :arrow_right: `componentDidMount()` 순서로 실행된다
 
-③ componentDidUpdate() 함수 : 화면이 업데이트 되면 실행되는 함수
+**③ componentDidUpdate() 함수** : 화면이 업데이트 되면 실행되는 함수
 
 `setState()` :arrow_right: `render()` :arrow_right: `componentDidUpdate()` 순서로 실행된다
 
-④ componentWillUnmount() 함수 : 컴포넌트가 화면에서 떠날 때 실행되는 함수. 주로 컴포넌트에 적용한 이벤트 리스너를 제거할 때 많이 사용한다
+**④ componentWillUnmount() 함수** : 컴포넌트가 화면에서 떠날 때 실행되는 함수. 주로 컴포넌트에 적용한 이벤트 리스너를 제거할 때 많이 사용한다
 
 ### 6. 영화 앱 만들기
 
@@ -583,11 +626,11 @@ export default App;
 #### 2. 영화 API 사용하기
 영화 데이터를 로딩하려면 자바스크립트의 fetch()라는 함수가 필요하지만, fetch()는 이 책의 범위를 넘어가므로 axios를 사용해서 영화 앱을 만든다
 
-① axios 설치하기
+**① axios 설치하기**
 
 명령 프롬프트에서 `npm install axios`
 
-② 노마드 코더 영화 API를 영화 앱에서 호출하기
+**② 노마드 코더 영화 API를 영화 앱에서 호출하기**
 
 📁 ./src/App.js
 ```javascript
@@ -609,7 +652,7 @@ class App extends React.Component {
   // (생략...)
 ```
 
-③ 영화 API 호출하는 함수를 만들고 `async`와 `await`으로 영화 API로 얻은 데이터 잡기
+**③ 영화 API 호출하는 함수를 만들고 `async`와 `await`으로 영화 API로 얻은 데이터 잡기**
 
 📁 ./src/App.js
 ```javascript
@@ -659,9 +702,10 @@ getMovies = async () => {
 }
 // (생략...)
 ```
+
 #### 4. Movie 컴포넌트 만들기
 
-① src 폴더에 Movie.js 파일을 새로 만들고 Movie 컴포넌트를 만든다
+**① src 폴더에 Movie.js 파일을 새로 만들고 Movie 컴포넌트를 만든다**
 
 📁 ./src/Movie.js
 ```javascript
@@ -685,7 +729,7 @@ Movie.propTypes = {
 export default Movie;
 ```
 
-② API에 구현되어 있는 정렬 기능을 사용해서 평점 순으로 데이터 보여주기
+**② API에 구현되어 있는 정렬 기능을 사용해서 평점 순으로 데이터 보여주기**
 
 axios.get()에 'yts-proxy.now.sh/list_movies_json?sort_by=rating' 을 전달한다
 
@@ -702,7 +746,7 @@ getMovies = async () => {
 // (생략...)
 ```
 
-③ App 컴포넌트에서 Movie 컴포넌트 그리기
+**③ App 컴포넌트에서 Movie 컴포넌트 그리기**
 
 구조 분해 할당으로 this.state에 있는 movies를 얻은 다음, App 컴포넌트에서 movies.map()을 사용하여 Movie 컴포넌트를 반환하도록 한다
 
@@ -763,7 +807,7 @@ export default App;
 
 #### 5. 영와 앱 스타일링하기 - 기초
 
-App 컴포넌트에 HTML 추가하기
+**App 컴포넌트에 HTML 추가하기**
 
 📁 ./src/App.js
 ```javascript
@@ -822,7 +866,7 @@ function Movie({ title, year, summary, poster }) {
 
 #### 1. 영화 앱 전체 모습 수정하기
 
-영화 API에서 장르 키를 영화 앱에 추가하기 위해 Movie 컴포넌트에 genres props 넘겨주기
+**영화 API에서 장르 키를 영화 앱에 추가하기 위해 Movie 컴포넌트에 genres props 넘겨주기**
 
 📁 ./src/Movie.js
 ```javascript
@@ -838,7 +882,7 @@ Movie.propTypes = {
 };
 ```
 
-App 컴포넌트에서 Movie 컴포넌트로 genres props 전달
+**App 컴포넌트에서 Movie 컴포넌트로 genres props 전달**
 
 📁 ./src/App.js
 ```javascript
@@ -912,7 +956,7 @@ function Movie({ title, year, summary, poster, genres }) {
 
 #### 2. 영화 앱 스타일링하기
 
-App.css 파일 수정
+**App.css 파일 수정**
 
 📁 ./src/App.css
 ```css
@@ -988,7 +1032,7 @@ body {
 }
 ```
 
-시놉시스 180자로 제한하기
+**시놉시스 180자로 제한하기**
 
 📁 ./src/Movie.js
 ```javascript
@@ -1001,7 +1045,7 @@ function Movie({ title, year, summary, poster, genres }) {
 }
 ```
 
-영화 앱 제목 바꾸기
+**영화 앱 제목 바꾸기**
 
 📁 ./public/index.html
 ```html
@@ -1016,14 +1060,14 @@ function Movie({ title, year, summary, poster, genres }) {
 
 가장 처음으로 만들 기능은 내비게이션 기능으로 Home은 영화 앱 화면으로 이동시켜주고, About은 개발자 자기 소개 화면으로 이동시켜준다. 이때 '화면 이동'을 시켜주려면 '화면 이동을 시켜주는 장치'가 필요한데 이것이 라우터다.
 
-① 라우터 설치 : 명령 프롬프트에서 `npm install react-router-dom`
+**① 라우터 설치** : 명령 프롬프트에서 `npm install react-router-dom`
 
-② components 폴더에 Movie 컴포넌트 옮기기
+**② components 폴더에 Movie 컴포넌트 옮기기**
 
 📁 ./src/components/Movie.js
 📁 ./src/components/Movie.css
 
-③ routes 폴더에 라우터가 보여줄 화면 만들기
+**③ routes 폴더에 라우터가 보여줄 화면 만들기**
 
 Home.js 파일에 작성하는 코도는 App.js 파일의 코드를 그대로 복사해서 필요한 부분을 수정한다
 
@@ -1077,7 +1121,7 @@ Home.css를 import 했으므로 Home.css를 만들어준다
 }
 ```
 
-④ App.js 수정
+**④ App.js 수정**
 
 📁 ./src/App.js
 ```javascript
@@ -1102,7 +1146,7 @@ export default App;
 
 react-router-dom은 여러 종류의 라우터를 제공하는데 우리는 HashRouter와 Route 컴포넌트를 사용할 것이다.
 
-① HashRouter와 Route 컴포넌트 사용하기
+**① HashRouter와 Route 컴포넌트 사용하기**
 
 HashRouter와 Route 컴포넌트를 import 하고, HashRouter 컴포넌트가 Route 컴포넌트를 감싸 반환하도록 App.js를 수정한다
 
@@ -1126,7 +1170,7 @@ export default App;
 
 HashRouter 때문에 앱이 실행되는 주소에 #/이 붙게 된다
 
-② Route 컴포넌트에 path, component props 추가하기
+**② Route 컴포넌트에 path, component props 추가하기**
 
 About 컴포넌트를 import 하고 path, component props에 URL과 About 컴포넌트를 전달한다
 
@@ -1144,7 +1188,7 @@ function App() {
 }
 ```
 
-③ About.js 수정하기
+**③ About.js 수정하기**
 
 아직 About.js에 아무것도 입력하지 않았으니 적당한 내용을 작성해보자
 
@@ -1159,7 +1203,7 @@ function About() {
 export default About;
 ```
 
-④ 라우터 테스트
+**④ 라우터 테스트**
 
 localhost:3000/#에 path props로 지정했던 값 /about을 붙여서 접속해보자
 
@@ -1167,7 +1211,7 @@ URL은 localhost:3000/#/aobut이고, About 컴포넌트에 작성했던 내용�
 
 이제 Home 컴포넌트도 보여줄 수 있도록 App.js를 수정해보자
 
-⑤ Home 컴포넌트를 위한 Route 컴포넌트 추가하기
+**⑤ Home 컴포넌트를 위한 Route 컴포넌트 추가하기**
 
 App 컴포넌트에 Home 컴포넌트를 import 하고, 또 다른 Route 컴포넌트를 추가한다
 
@@ -1188,7 +1232,7 @@ function App() {
 }
 ```
 
-⑥ 라우터 테스트하고 문제 찾기
+**⑥ 라우터 테스트하고 문제 찾기**
 
 localhost:3000에 접속하면 주소 뒤에 자동으로 /#/가 붙으면서 영화 앱 화면이 나타난다. 
 
@@ -1202,7 +1246,7 @@ localhost:3000에 접속하면 주소 뒤에 자동으로 /#/가 붙으면서 �
 
 그런데 현재 path props에는 /, /about이 모두 존재하기 때문에 Home 컴포넌트와 About 컴포넌트가 모두 출력되게 된다.
 
-⑦ Route 컴포넌트에 exact props 추가
+**⑦ Route 컴포넌트에 exact props 추가**
 
 라우터가 path props에 있는 모든 컴포넌트를 출력하는 문제를 해결하기 위해
 
@@ -1222,7 +1266,7 @@ function App() {
 }
 ```
 
-⑧ About.css 작성
+**⑧ About.css 작성**
 
 routes 폴더에 About.css 파일을 생성한 다음 내용을 입력한다.
 
@@ -1270,7 +1314,7 @@ export default About;
 
 #### 3. 내비게이션 만들어 보기
 
-① Navigartion 컴포넌트 만들기
+**① Navigartion 컴포넌트 만들기**
 
 📁 ./src/components/Navigation.js
 ```javascript
@@ -1288,7 +1332,7 @@ function Navigation() {
 export default Navigation;
 ```
 
-② Navigation 컴포넌트 App 컴포넌트에 포함시키기
+**② Navigation 컴포넌트 App 컴포넌트에 포함시키기**
 
 📁 ./src/App.js
 ```javascript
@@ -1307,7 +1351,7 @@ function App() {
 }
 ```
 
-③ Hoem 링크 테스트
+**③ Home 링크 테스트**
 
 Home 링크를 눌러 보면 겉으로 보기에는 잘 동작하는 것 같다.
 
@@ -1319,7 +1363,7 @@ Home 링크를 눌러 보면 겉으로 보기에는 잘 동작하는 것 같다.
 
 이 문제를 해결하기 위해 react-router-dom의 Link 컴포넌트를 사용한다
 
-④ a 엘리먼트 Link 컴포넌트로 바꾸기
+**④ a 엘리먼트 Link 컴포넌트로 바꾸기**
 
 Navigation 컴포넌트에 Link 컴포넌트를 import하고, a 엘리먼트를 Link 컴포넌트로 href 속성은 to로 바꿔준다.
 
@@ -1338,7 +1382,7 @@ function Navigation() {
 }
 ```
 
-⑤ Navigation 컴포넌트 스타일링
+**⑤ Navigation 컴포넌트 스타일링**
 
 📁 ./src/components/Navigation.js
 ```javascript
@@ -1406,7 +1450,7 @@ Home에서 볼 수 있는 영화 정보는 아주 일부분이다. 영화 API를
 
 route props는 라우팅 대상이 되는 컴포넌트에 넘겨주는 기본 props를 말한다. 즉, 우리가 직접 넘겨주지 않아도 기본으로 넘어가는 route props가 있고, 이것을 이용해야 영화 데이터를 사세 정보 컴포넌트로 전달할 수 있다.
 
-① route props 살표보기
+**① route props 살표보기**
 
 console.log()를 통해 About으로 어떤 props가 넘어오는지 살펴보자
 
@@ -1424,7 +1468,7 @@ About 페이지 [Console] 탭에
 
 우리가 주목해야할 점은 Route 컴포넌트가 그려줄 컴포넌트에는 항상 props가 전달되고, 이 props에 우리가 원하는 데이터를 담아 보내줄 수 있다는 것이다.
 
-② route props에 데이터 담아 보내기
+**② route props에 데이터 담아 보내기**
 
 route props에 데이터를 담아 보내려면 Navigation 컴포넌트에 있는 Link 컴포넌트의 to props의 구조를 조금 바꿔야 한다.
 
@@ -1451,7 +1495,7 @@ About 페이지 [Console] 탭에서 [location]을 펼치면 state 키에 우리�
 
 to props를 통해 데이터를 보낼 수 있는 것을 확인했으니 Navigation 컴포넌트를 원래대로 돌려 놓는다
 
-③ Movie 컴포넌트에 Link 컴포넌트 추가하기
+**③ Movie 컴포넌트에 Link 컴포넌트 추가하기**
 
 Movie 컴포넌트를 누르면 영화 상세 정보 페이지로 이동해야 하므로 Movie 컴포넌트에 Link 컴포넌트를 추가한다
 
@@ -1492,7 +1536,7 @@ function Movie({ title, year, summary, poster, genres }) {
 
 이제 영화 카드를 누르면 /movie-detail로 이동하게 된다
 
-④ Detail 컴포넌트 만들기
+**④ Detail 컴포넌트 만들기**
 
 Detail 컴포넌트를 routes 폴더에 추가한다. 그리고 Detail 컴포넌트에서 Movie 컴포넌트의 Link 컴포넌트가 보내준 영화 데이터를 확인해 볼 수 있도록 console.log()도 작성해준다
 
@@ -1510,7 +1554,7 @@ export default Detail;
 
 아직 Detail을 출력해주는 Route 컴포넌트를 추가하지 않았으므로 console.log(props)의 실행을 확인할 수 없다
 
-⑤ Route 컴포넌트 추가하기
+**⑤ Route 컴포넌트 추가하기**
 
 App.js에 Detail 컴포넌트를 import하고 Route 컴포넌트에서 Detail 컴포넌트를 그려주도록 코드를 작성한다
 
@@ -1532,7 +1576,7 @@ function App() {
 }
 ```
 
-⑥ 영화 데이터 확인하기
+**⑥ 영화 데이터 확인하기**
 
 영화 카드를 눌러 /movie-detail로 이동하면 Detail 컴포넌트가 출력하고 있는 Hello를 볼 수 있다.
 
@@ -1550,7 +1594,7 @@ Detail 컴포넌트의 Hello는 출력되지만 [Console] 탭의 [location → s
 
 history 키에는 push, go, goBack, goForward와 같은 키가 있고, 그 키에는 URL을 변경해주는 함수들이 들어있다.
 
-① history 키 살펴보기
+**① history 키 살펴보기**
 
 주소창에 localhost:3000을 입력해서 이동한 다음 아무 영화 카드를 눌러 이동한다. 그럼 다음 [Console] 탭에서 [history]에 출력되는 값을 펼쳐보자
 
@@ -1560,7 +1604,7 @@ push, go, goBack, goForward 키를 볼 수 있을 것이다.
 
 그 전에, Detail 컴포넌트를 클래스형 컴포넌트로 변경해야 한다. 그래야 componentDidMount() 함수를 사용해 Detial 컴포넌트가 마운트될 때 push() 함수를 실행할 수 있다.
 
-② Detail 컴포넌트 클래스형 컴포넌트로 변경하고 push() 함수 사용
+**② Detail 컴포넌트 클래스형 컴포넌트로 변경하고 push() 함수 사용**
 
 📁 ./src/routes/Detail.js
 ```javascript
@@ -1587,7 +1631,7 @@ export default Detail;
 
 이제 /movie-detail로 직접 주소를 입력해서 이동하면 다시 Home으로 돌아오게 된다
 
-③ 영화 제목 출력하기
+**③ 영화 제목 출력하기**
 
 영화 상세 정보 페이지 중에서 제목부터 출력해보자
 
@@ -1611,7 +1655,7 @@ class Detail extends React.Component {
 
 그러므로 render() 함수에도 componentDidMount() 함수에 작성한 리다이렉트 코드를 추가해줘야 한다
 
-④ render() 함수 수정
+**④ render() 함수 수정**
 
 📁 ./src/routes/Detail.js
 ```javascript
@@ -1635,7 +1679,7 @@ location.state가 없으면 render() 함수가 null을 반환하도록 만들어
 
 ### 깃허브에 배포하기
 
-① package.json 수정하기
+**① package.json 수정하기**
 
 📁 ./package.json
 ```json
@@ -1650,12 +1694,12 @@ location.state가 없으면 render() 함수가 null을 반환하도록 만들어
 "homepage": "https://[계정 이름].github.io/[저장소 이름]"
 ```
 
-② 최종 코드 깃허브에 업로드
+**② 최종 코드 깃허브에 업로드**
 
-③ gh-pages 설치
+**③ gh-pages 설치**
 
 명령 프롬프트 : `npm install gh-pages`
 
-④ 영화 앱 깃허브에 배포
+**④ 영화 앱 깃허브에 배포**
 
 명령 프롬프트 : `npm run deploy`
