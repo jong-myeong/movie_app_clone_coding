@@ -932,27 +932,32 @@ body {
 📁 ./src/Movie.css
 ```css
 .movies .movie {
-  width: 45%;
   background-color: white;
   margin-bottom: 70px;
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
   font-weight: 300;
   padding: 20px;
   border-radius: 5px;
   color: #adaeb9;
   box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
-      0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+    0 8px 16px -8px rgba(0, 0, 0, 0.3), 0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+}
+
+.movies .movie a {
+  display: grid;
+  grid-template-columns: minmax(150px, 1fr) 2fr;
+  grid-gap: 20px;
+  text-decoration: none;
+  color: inherit;
 }
 
 .movie img {
   position: relative;
   top: -50px;
   max-width: 150px;
+  width: 100%;
   margin-right: 30px;
   box-shadow: 0 30px 60px -12px rgba(50, 50, 93, 0.25),
-      0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
+    0 18px 36px -18px rgba(0, 0, 0, 0.3), 0 -12px 36px -8px rgba(0, 0, 0, 0.025);
 }
 
 .movie .movie__title,
@@ -972,6 +977,7 @@ body {
   padding: 0;
   margin: 0;
   display: flex;
+  flex-wrap: wrap;
   margin: 5px 0px;
 }
 
@@ -1003,3 +1009,262 @@ function Movie({ title, year, summary, poster, genres }) {
 <title>Movie App</title>
 <!-- 생략 -->
 ```
+
+### 8. 영화 앱에 여러 기능 추가하기
+
+##### 1. react-router-dom 설치하고 프로젝트 폴더 정리하기
+
+가장 처음으로 만들 기능은 내비게이션 기능으로 Home은 영화 앱 화면으로 이동시켜주고, About은 개발자 자기 소개 화면으로 이동시켜준다. 이때 '화면 이동'을 시켜주려면 '화면 이동을 시켜주는 장치'가 필요한데 이것이 라우터다.
+
+① 라우터 설치 : 명령 프롬프트에서 `npm install react-router-dom`
+
+② components 폴더에 Movie 컴포넌트 옮기기
+
+📁 ./src/components/Movie.js
+📁 ./src/components/Movie.css
+
+③ routes 폴더에 라우터가 보여줄 화면 만들기
+
+Home.js 파일에 작성하는 코도는 App.js 파일의 코드를 그대로 복사해서 필요한 부분을 수정한다
+
+📁 ./src/routes/Home.js
+```javascript
+import React from 'react';
+import axios from 'axios';
+import Movie from '../components/Movie';
+import './Home.css'
+
+class Home extends React.Component {
+  // (생략...)
+}
+
+export default Home;
+```
+
+Home.css를 import 했으므로 Home.css를 만들어준다
+
+📁 ./src/routes/Home.css
+```javascript
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.loader {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 300;
+}
+
+.movies {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(400px, 1fr));
+  grid-gap: 100px;
+  padding: 50px;
+  width: 80%;
+  padding-top: 70px;
+}
+
+@media screen and (max-width: 1090px) {
+  .movies {
+      grid-template-columns: 1fr;
+      width: 100%;
+  }
+}
+```
+
+④ App.js 수정
+
+📁 ./src/App.js
+```javascript
+import React from 'react';
+import Home from './routes/Home';
+import './App.css'
+
+function App() {
+  return <Home />;
+}
+
+export default App;
+```
+
+이제 App.js가 2개의 라우터(Home.js, About.js)를 보여줄 수 있도록 만들면 된다.
+
+##### 2. 라우터 만들어 보기
+
+라우터는 URL을 통해 특정 컴포넌트를 불러오는 역할을 한다. 
+
+예를 들어, `localhost:3000/home` 이라고 입력하면 Home 컴포넌트를 불러온다.
+
+react-router-dom은 여러 종류의 라우터를 제공하는데 우리는 HashRouter와 Route 컴포넌트를 사용할 것이다.
+
+① HashRouter와 Route 컴포넌트 사용하기
+
+HashRouter와 Route 컴포넌트를 import 하고, HashRouter 컴포넌트가 Route 컴포넌트를 감싸 반환하도록 App.js를 수정한다
+
+📁 ./src/App.js
+```javascript
+import React from 'react';
+// import Home from './routes/Home'; ⇒ 잠시 삭제
+import './App.css'
+import { HashRouter, Route } from 'react-router-dom';
+
+function App() {
+  return (
+    <HashRouter>
+      <Route />
+    </HashRouter>
+  )
+}
+
+export default App;
+```
+
+HashRouter 때문에 앱이 실행되는 주소에 #/이 붙게 된다
+
+② Route 컴포넌트에 path, component props 추가하기
+
+About 컴포넌트를 import 하고 path, component props에 URL과 About 컴포넌트를 전달한다
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+import About from './routes/About';
+
+function App() {
+  return (
+    <HashRouter>
+      <Route path="/about" component={About} />
+    </HashRouter>
+  )
+}
+```
+
+③ About.js 수정하기
+
+아직 About.js에 아무것도 입력하지 않았으니 적당한 내용을 작성해보자
+
+📁 ./src/route/About.js
+```javascript
+import React from 'react';
+
+function About() {
+    return <span>About this page: I built it because I love movies.</span>
+}
+
+export default About;
+```
+
+④ 라우터 테스트
+
+localhost:3000/#에 path props로 지정했던 값 /about을 붙여서 접속해보자
+
+URL은 localhost:3000/#/aobut이고, About 컴포넌트에 작성했던 내용이 출력될 것이다
+
+이제 Home 컴포넌트도 보여줄 수 있도록 App.js를 수정해보자
+
+⑤ Home 컴포넌트를 위한 Route 컴포넌트 추가하기
+
+App 컴포넌트에 Home 컴포넌트를 import 하고, 또 다른 Route 컴포넌트를 추가한다
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+import Home from './routes/Home';
+
+function App() {
+  return (
+    <HashRouter>
+      // path props를 "/"으로 입력한 이유는 
+      // localhost:3000에 접속하면 기본으로 보여줄 컴포넌트가 Home 컴포넌트이기 때문이다
+      <Route path="/" component={Home} />
+      <Route path="/about" component={About} />
+    </HashRouter>
+  )
+}
+```
+
+⑥ 라우터 테스트하고 문제 찾기
+
+localhost:3000에 접속하면 주소 뒤에 자동으로 /#/가 붙으면서 영화 앱 화면이 나타난다. 
+
+이어서 /about에 접속하면 About 컴포넌트와 Home 컴포넌트가 함께 출력된다.
+
+이것은 리액트 라우터의 동작 방식 때문에 발생하는 문제이다.
+
+![router mechanims](https://user-images.githubusercontent.com/52479435/93049662-6bac3380-f69c-11ea-838c-4a0e85a6ddc4.png)
+
+라우터는 사용자가 /about에 접속하면 /, /about 순서로 path props가 있는지 찾는다.
+
+그런데 현재 path props에는 /, /about이 모두 존재하기 때문에 Home 컴포넌트와 About 컴포넌트가 모두 출력되게 된다.
+
+⑦ Route 컴포넌트에 exact props 추가
+
+라우터가 path props에 있는 모든 컴포넌트를 출력하는 문제를 해결하기 위해
+
+path props가 "/"인 Route 컴포넌트에 exact={true}를 추가한다
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+
+function App() {
+  return (
+    <HashRouter>
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+    </HashRouter>
+  )
+}
+```
+
+⑧ About.css 작성
+
+routes 폴더에 About.css 파일을 생성한 다음 내용을 입력한다.
+
+📁 ./src/routes/About.css
+```css
+.about__container {
+  box-shadow: 0 13px 27px -5px rgba(50, 50, 50, 0.25),
+    0 8px 16px -8px rgba(0, 0, 0, 0.3),
+    0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+  padding: 20px;
+  border-radius: 5px;
+  background-color: white;
+  margin: 0 auto;
+  margin-top: 100px;
+  width: 100%;
+  max-width: 400px;
+  font-weight: 300;
+}
+
+.about__container span:first-child {
+  font-size: 20px;
+}
+```
+
+About.js에 About.css를 import 하고 css 내용을 적용할 수 있도록 JSX를 수정한다
+
+📁 ./src/routes/About.js
+```javascript
+import React from 'react';
+import './About.css';
+
+function About() {
+  return (
+    <div className="about__container">
+      <span>
+        "Freedom is the freedom to say that two plus two make four. If that is granted, all else follows."
+      </span>
+      <span>- George Orwell, 1984</span>
+    </div>
+  );
+}
+
+export default About;
+```
+
