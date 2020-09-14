@@ -1684,10 +1684,10 @@ location.state가 없으면 render() 함수가 null을 반환하도록 만들어
 📁 ./package.json
 ```json
 // (생략..)
+// predeploy, deploy 추가
 "scripts": {
   "start": "react-scripts start",
   "build": "react-scripts build",
-  // predeploy, deploy 추가
   "predeploy": "npm run build",
   "deploy": "gh-pages -d build"
 },
