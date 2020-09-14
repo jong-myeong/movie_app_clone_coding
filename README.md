@@ -1687,8 +1687,9 @@ location.state가 없으면 render() 함수가 null을 반환하도록 만들어
 "scripts": {
   "start": "react-scripts start",
   "build": "react-scripts build",
-  "predeploy": "npm run build",   // 추가
-  "deploy": "gh-pages -d build"   // 추가
+  // predeploy, deploy 추가
+  "predeploy": "npm run build",
+  "deploy": "gh-pages -d build"
 },
 // hoempage 추가
 "homepage": "https://[계정 이름].github.io/[저장소 이름]"
