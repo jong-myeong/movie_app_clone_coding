@@ -1632,3 +1632,30 @@ class Detail extends React.Component {
 location.state가 없으면 render() 함수가 null을 반환하도록 만들어서 문제 없이 실행되도록 만든다
 
 그러면 이어서 componentDidMount() 함수가 실행되면서 리다이렉트 기능이 동작하게 된다
+
+### 깃허브에 배포하기
+
+① package.json 수정하기
+
+📁 ./package.json
+```javascript
+// (생략..)
+"scripts": {
+  "start": "react-scripts start",
+  "build": "react-scripts build",
+  "predeploy": "npm run build",   // 추가
+  "deploy": "gh-pages -d build"   // 추가
+},
+// hoempage 추가
+"homepage": "https://[계정 이름].github.io/[저장소 이름]"
+```
+
+② 최종 코드 깃허브에 업로드
+
+③ gh-pages 설치
+
+명령 프롬프트 : `npm install gh-pages`
+
+④ 영화 앱 깃허브에 배포
+
+명령 프롬프트 : `npm run deploy`
