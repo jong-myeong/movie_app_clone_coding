@@ -12,7 +12,7 @@
 8. 영화 앱에 여러 기능 추가하기
 
 ### Chapter1. 안녕 리액트?
-##### 수업 준비
+#### 수업 준비
 - Node.js 설치 확인
 명령 프롬프트에서 `node -v`
 - Node.js 설치 :point_right: <https://nodejs.org>
@@ -20,14 +20,14 @@
 - [npx](https://geonlee.tistory.com/32) 설치하기 :point_right: 명령 프롬프트에서 `npm install npx -g`
 
 ### Chapter2. 리액트로 클론 코딩 시작하기
-##### 1. create-react-app
+#### 1. create-react-app
 create-react-app은 리액트 개발을 바로 시작할 수 있도록 프로젝트 구조 작업, 설정 작업 등을 자동으로 진행해주는 도구
 
 **실행**
 
 명령 프롬프트를 실행한 후 리액트 앱을 만들고 싶은 곳으로 이동해서
 `npx create-react-app 원하는 이름` 으로 리액트 앱 만들기
-##### 1. package.json 파일 수정
+#### 1. package.json 파일 수정
 package.json 파일에서 test와 eject 명령어는 사용하지 않으니 삭제
 ```javascript
  "scripts": {
@@ -37,11 +37,11 @@ package.json 파일에서 test와 eject 명령어는 사용하지 않으니 삭�
     "eject": "react-scripts eject"    // 삭제
   },
 ```
-##### 2. 리액트 앱 실행하기
+#### 2. 리액트 앱 실행하기
 명령 프롬프트에서 루트 폴더로 이동한 다음 `npm start` 입력
-##### 3. src 폴더 정리
+#### 3. src 폴더 정리
 src 폴더에 App.js, index.js 제외하고 모두 제거
-##### 4. App.js, index.js 수정
+#### 4. App.js, index.js 수정
 :file_folder: ./src/App.js
 ```javascript
 import React from 'react';
@@ -63,7 +63,7 @@ ReactDOM.render(<App />, document.getElementById('root'));
 ```
 
 ### Chapter3. 리액트 기초 개념 알아보기
-##### 1. 컴포넌트 만들기
+#### 1. 컴포넌트 만들기
 :file_folder: ./src/Movie.js
 ```javascript
 import React from 'react';
@@ -76,7 +76,7 @@ function Movie() {
 // 컴포넌트 이름으로 export
 export default Movie;
 ```
-##### 2. JSX
+#### 2. JSX
 JSX는 JavaScript와 HTML의 조합한 문법이다.
 ```javascript
 function Movie() {
@@ -84,7 +84,7 @@ function Movie() {
   return <h3>I love Movie</h3>;
 }
 ```
-##### 3. 컴포넌트 사용
+#### 3. 컴포넌트 사용
 1. import 해서 사용  
 
 :file_folder: ./src/App.js
@@ -120,7 +120,7 @@ function App() {
 
 export default App;
 ```
-##### 4. props
+#### 4. props
 props는 컴포넌트에서 컴포넌트로 전달하는 데이터를 말한다. 함수의 매개변수와 비슷한 개념이라고 생각할 수 있다.  
 props를 사용하면 컴포넌트를 효율적으로 사용할 수 있다.
 1. props로 컴포넌트에 데이터 전달하기  
@@ -183,7 +183,7 @@ export default App;
 ```
 
 ### Chapter4. 슈퍼 똑똑하게 컴포넌트 만들기
-##### 1. map 함수
+#### 1. map 함수
 **map 함수** : 배열의 모든 원소마다 특정 작업을 하는 함수를 적용하고, 그 함수가 반환한 결과를 모아서 배열로 반환해준다
 
 <map 함수 예제>
@@ -204,7 +204,7 @@ Avengers          // console.log(current)가 출력한 네 번째 값 (반환값
 
 [0, 0, 0, 0]      // movieList.map의 최종 반환값
 ```
-##### 2. map 함수로 컴포넌트 여러 개 만들기
+#### 2. map 함수로 컴포넌트 여러 개 만들기
 
 :file_folder: ./src/App.js
 ```javascript
@@ -252,7 +252,7 @@ function App() {
 
 export default App;
 ```
-##### 3. map 함수로 만든 컴포넌트에 key props 추가하기
+#### 3. map 함수로 만든 컴포넌트에 key props 추가하기
 현재 콘솔 창에는 두 가지 메시지가 있을 것이다.
 ```
 > Warning: Each child in a list should have a unique "key" prop,
@@ -313,7 +313,7 @@ function App() {
   );
 }
 ```
-##### 4. props 검사하는 방법
+#### 4. props 검사하는 방법
 우리가 정의한 props의 값이 컴포넌트에 제대로 전달되지 않으면 우리가 원하는 대로 앱이 작동하지 않을 것이다. 이런 경우에 props를 검사하는 방법이 필요하다.
 
 예를 들어, 우리가 만들고 있는 Movie 앱에 '평점' 항목을 추가했다고 가정해보자.
@@ -404,7 +404,7 @@ export default App;
 ```
 
 ### 5. state와 클래스형 컴포넌트
-##### 1. 클래스형 컴포넌트
+#### 1. 클래스형 컴포넌트
 
 클래스형 컴포넌트는 React.Component 클래스를 상속해서 만들어진다.
 
@@ -427,7 +427,7 @@ class App extends React.Component {
 export default App;
 ```
 
-##### 2. state
+#### 2. state
 state는 클래스형 컴포넌트에서 동적 데이터를 다루기 위해 사용되는 '객체'이다.
 
 state를 사용하려면 반드시 클래스형 컴포넌트 안에서 소문자를 이용하여 state라고 적어야 한다.
@@ -445,7 +445,7 @@ class App extends React.Component {
 }
 ```
 
-##### 3. 버튼으로 숫자 증감 기능 만들기
+#### 3. 버튼으로 숫자 증감 기능 만들기
 state 데이터 다루는 연습을 위해 버튼을 눌러 숫자를 증감시키는 예제를 만들어보자
 
 :file_folder: ./src/App.js
@@ -533,7 +533,7 @@ class App extends React.Component {
 }
 ```
 
-##### 4. 클래스형 컴포넌트 생명주기 함수
+#### 4. 클래스형 컴포넌트 생명주기 함수
 
 ① constructor() 함수 : 클래스형 컴포넌트의 생명주기 함수는 아니지만 클래스형 컴포넌트가 생성될 때 호출되는 함수
 
@@ -549,7 +549,7 @@ class App extends React.Component {
 
 ### 6. 영화 앱 만들기
 
-##### 1. 영화 앱 만들기 워밍업
+#### 1. 영화 앱 만들기 워밍업
 
 :file_folder: ./src/App.js
 ```javascript
@@ -580,7 +580,7 @@ class App extends React.Component {
 export default App;
 ```
 
-##### 2. 영화 API 사용하기
+#### 2. 영화 API 사용하기
 영화 데이터를 로딩하려면 자바스크립트의 fetch()라는 함수가 필요하지만, fetch()는 이 책의 범위를 넘어가므로 axios를 사용해서 영화 앱을 만든다
 
 ① axios 설치하기
@@ -634,7 +634,7 @@ class App extends React.Component {
 }
 ```
 
-##### 3. 영화 데이터 화면에 그리기
+#### 3. 영화 데이터 화면에 그리기
 
 영화 API로 얻은 데이터에서 우리가 필요한 영화 데이터 객체는  
 data > data > moives 순서로 접근해서 추출할 수 있다 👉 `movies.data.data.movies`
@@ -659,7 +659,7 @@ getMovies = async () => {
 }
 // (생략...)
 ```
-##### 4. Movie 컴포넌트 만들기
+#### 4. Movie 컴포넌트 만들기
 
 ① src 폴더에 Movie.js 파일을 새로 만들고 Movie 컴포넌트를 만든다
 
@@ -761,7 +761,7 @@ class App extends React.Component {
 export default App;
 ```
 
-##### 5. 영와 앱 스타일링하기 - 기초
+#### 5. 영와 앱 스타일링하기 - 기초
 
 App 컴포넌트에 HTML 추가하기
 
@@ -820,7 +820,7 @@ function Movie({ title, year, summary, poster }) {
 
 ### 7. 영화 앱 다듬기
 
-##### 1. 영화 앱 전체 모습 수정하기
+#### 1. 영화 앱 전체 모습 수정하기
 
 영화 API에서 장르 키를 영화 앱에 추가하기 위해 Movie 컴포넌트에 genres props 넘겨주기
 
@@ -910,7 +910,7 @@ function Movie({ title, year, summary, poster, genres }) {
 }
 ```
 
-##### 2. 영화 앱 스타일링하기
+#### 2. 영화 앱 스타일링하기
 
 App.css 파일 수정
 
@@ -1012,7 +1012,7 @@ function Movie({ title, year, summary, poster, genres }) {
 
 ### 8. 영화 앱에 여러 기능 추가하기
 
-##### 1. react-router-dom 설치하고 프로젝트 폴더 정리하기
+#### 1. react-router-dom 설치하고 프로젝트 폴더 정리하기
 
 가장 처음으로 만들 기능은 내비게이션 기능으로 Home은 영화 앱 화면으로 이동시켜주고, About은 개발자 자기 소개 화면으로 이동시켜준다. 이때 '화면 이동'을 시켜주려면 '화면 이동을 시켜주는 장치'가 필요한데 이것이 라우터다.
 
@@ -1094,7 +1094,7 @@ export default App;
 
 이제 App.js가 2개의 라우터(Home.js, About.js)를 보여줄 수 있도록 만들면 된다.
 
-##### 2. 라우터 만들어 보기
+#### 2. 라우터 만들어 보기
 
 라우터는 URL을 통해 특정 컴포넌트를 불러오는 역할을 한다. 
 
@@ -1268,3 +1268,367 @@ function About() {
 export default About;
 ```
 
+#### 3. 내비게이션 만들어 보기
+
+① Navigartion 컴포넌트 만들기
+
+📁 ./src/components/Navigation.js
+```javascript
+import React from 'react';
+
+function Navigation() {
+    return (
+        <div>
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+        </div>
+    );
+}
+
+export default Navigation;
+```
+
+② Navigation 컴포넌트 App 컴포넌트에 포함시키기
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+import Navigation from './components/Navigation';
+
+function App() {
+  return (
+    <HashRouter>
+      // Navigation 컴포넌트는 반드시 HashRouter 컴포넌트 사이에 포함시켜야 한다
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+    </HashRouter>
+  )
+}
+```
+
+③ Hoem 링크 테스트
+
+Home 링크를 눌러 보면 겉으로 보기에는 잘 동작하는 것 같다.
+
+하지만 현재는 링크를 누를 때마다 리액트가 죽고, 새 페이지가 새로고침 되어 열리는 문제가 있다.
+
+이것은 a 엘리먼트 특징 때문이다. a 엘리먼트의 href 속성은 페이지 전체를 다시 그리기 때문이다.
+
+이 상태라면 필요한 부분만 다시 그려주는 리액트의 장점을 활용하기 힘들다.
+
+이 문제를 해결하기 위해 react-router-dom의 Link 컴포넌트를 사용한다
+
+④ a 엘리먼트 Link 컴포넌트로 바꾸기
+
+Navigation 컴포넌트에 Link 컴포넌트를 import하고, a 엘리먼트를 Link 컴포넌트로 href 속성은 to로 바꿔준다.
+
+📁 ./src/components/Navigation.js
+```javascript
+import React from 'react';
+import { Link } from 'react-router-dom'; 
+
+function Navigation() {
+    return (
+        <div>
+           <Link to="/">Home</Link>
+           <Link to="/about">About</Link>
+        </div>
+    );
+}
+```
+
+⑤ Navigation 컴포넌트 스타일링
+
+📁 ./src/components/Navigation.js
+```javascript
+import React from 'react';
+import { Link } from 'react-router-dom'; 
+import './Navigation.css';
+
+function Navigation() {
+    return (
+        <div className="nav">
+           <Link to="/">Home</Link>
+           <Link to="/about">About</Link>
+        </div>
+    );
+}
+
+export default Navigation;
+```
+
+📁 ./src/components/Navigation.css
+```css
+.nav {
+	z-index: 1;
+	position: fixed;
+	top: 50px;
+	left: 10px;
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	padding: 10px 20px;
+	box-shadow: 0 13px 27px -5px rgba(50, 50, 93, 0.25),
+		0 8px 16px -8px rgba(0, 0, 0, 0.3),
+		0 -6px 16px -6px rgba(0, 0, 0, 0.025);
+	border-radius: 5px;
+}
+
+@media screen and (max-width: 1090px) {
+	.nav {
+		left: initial;
+		top: initial;
+		bottom: 0px;
+		width: 100%;
+	}
+}
+
+.nav a {
+	text-decoration: none;
+	color: #0008fc;
+	text-transform: uppercase;
+	font-size: 12px;
+	text-align: center;
+	font-weight: 600;
+}
+
+.nav a:not(:last-child) {
+	margin-bottom: 20px;
+}
+```
+
+#### 4. 영화 상세 정보 기능 만들어 보기
+
+Home에서 볼 수 있는 영화 정보는 아주 일부분이다. 영화 API를 통해 더 많은 정보를 받고 있으므로 이것을 활용해 영화 상세 정보 기능을 만들어보자
+
+이 기능을 만들기 위해서는 route props를 반드시 이해해야 한다.
+
+route props는 라우팅 대상이 되는 컴포넌트에 넘겨주는 기본 props를 말한다. 즉, 우리가 직접 넘겨주지 않아도 기본으로 넘어가는 route props가 있고, 이것을 이용해야 영화 데이터를 사세 정보 컴포넌트로 전달할 수 있다.
+
+① route props 살표보기
+
+console.log()를 통해 About으로 어떤 props가 넘어오는지 살펴보자
+
+📁 ./src/routes/About.js
+```javascript
+function About(props) {
+  console.log(props);
+  // (생략...)
+}
+```
+
+About 페이지 [Console] 탭에  
+`{history: {...}, Location: {...}, match:{...}, staticContext: undefined}`  
+가 보일 것이다. 이게 react-router-dom에서 Route 컴포넌트가 그려줄 컴포넌트에 전달한 props다.
+
+우리가 주목해야할 점은 Route 컴포넌트가 그려줄 컴포넌트에는 항상 props가 전달되고, 이 props에 우리가 원하는 데이터를 담아 보내줄 수 있다는 것이다.
+
+② route props에 데이터 담아 보내기
+
+route props에 데이터를 담아 보내려면 Navigation 컴포넌트에 있는 Link 컴포넌트의 to props의 구조를 조금 바꿔야 한다.
+
+📁 ./src/components/Navigation.js
+```javascript
+function Navigation() {
+    return (
+        <div className="nav">
+           <Link to="/">Home</Link>
+           <Link to={{ 
+               pathname: './about', 
+               state: { fromNavigation: true}
+            }}>About</Link>
+        </div>
+    );
+}
+```
+
+코드에서 보듯 to props에 객체를 전달했다
+
+pathname은 URL을 의미하고, state는 우리가 route props로 보내줄 데이터를 의미한다
+
+About 페이지 [Console] 탭에서 [location]을 펼치면 state 키에 우리가 보내준 데이터를 확인할 수 있다
+
+to props를 통해 데이터를 보낼 수 있는 것을 확인했으니 Navigation 컴포넌트를 원래대로 돌려 놓는다
+
+③ Movie 컴포넌트에 Link 컴포넌트 추가하기
+
+Movie 컴포넌트를 누르면 영화 상세 정보 페이지로 이동해야 하므로 Movie 컴포넌트에 Link 컴포넌트를 추가한다
+
+이때, Link 컴포넌트의 위치에 주의한다
+
+📁 ./src/components/Movie.js
+```javascript
+// (생략..)
+import { Link } from 'react-router-dom';
+
+function Movie({ title, year, summary, poster, genres }) {
+  return (
+    <div className="movie">
+      <Link
+        to={{
+          pathname: '/movie-detail',
+          state: { year, title, summary, poster, genres },
+        }}
+      >
+        <img src={poster} alt={title} title={title} />
+        <div className="movie__data">
+          <h3 className="movie__title">{title}</h3>
+          <h5 className="movie__year">{year}</h5>
+          <ul className="movie__genres">
+            {genres.map((genre, index)=> {
+              return <li key={index} className="movie__genre">{genre}</li>;
+            })}
+          </ul>
+          <p className="movie__summary">{summary.slice(0, 180)}...</p>
+        </div>
+      </Link>
+    </div>
+  );
+}
+
+// (생략...)
+```
+
+이제 영화 카드를 누르면 /movie-detail로 이동하게 된다
+
+④ Detail 컴포넌트 만들기
+
+Detail 컴포넌트를 routes 폴더에 추가한다. 그리고 Detail 컴포넌트에서 Movie 컴포넌트의 Link 컴포넌트가 보내준 영화 데이터를 확인해 볼 수 있도록 console.log()도 작성해준다
+
+📁 ./src/routes/Detial.js
+```javascript
+import React from 'react';
+
+function Detail(props) {
+  console.log(props);
+  return <span>Hello</span>;
+}
+
+export default Detail;
+```
+
+아직 Detail을 출력해주는 Route 컴포넌트를 추가하지 않았으므로 console.log(props)의 실행을 확인할 수 없다
+
+⑤ Route 컴포넌트 추가하기
+
+App.js에 Detail 컴포넌트를 import하고 Route 컴포넌트에서 Detail 컴포넌트를 그려주도록 코드를 작성한다
+
+📁 ./src/App.js
+```javascript
+// (생략...)
+import Detail from './routes/Detail';
+
+function App() {
+  return (
+    <HashRouter>
+      <Navigation />
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/about" component={About} />
+      // Detail 컴포넌트 추가
+      <Route path="/movie-detail" component={Detail} />
+    </HashRouter>
+  )
+}
+```
+
+⑥ 영화 데이터 확인하기
+
+영화 카드를 눌러 /movie-detail로 이동하면 Detail 컴포넌트가 출력하고 있는 Hello를 볼 수 있다.
+
+그리고 [Console] 탭의 [location → state]에 Movie 컴포넌트에서 Link 컴포넌트를 통해 보내준 데이터를 확인할 수 있다.
+
+그런데 만약 영화 카드를 눌러서 이동하지 않고 바로 /movie-detail로 이동하면 어떻게 될까?
+
+Detail 컴포넌트의 Hello는 출력되지만 [Console] 탭의 [location → state]에 영화 데이터가 없다(undefined)
+
+이런 경우 사용자를 강제로 Home으로 돌려보내야 한다. 이 기능을 리다이렉트라고 한다
+
+#### 5. 리다이렉트 기능 만들기
+
+리다이렉트 기능을 위해서는 route props의 history 키를 이용해야 한다.
+
+history 키에는 push, go, goBack, goForward와 같은 키가 있고, 그 키에는 URL을 변경해주는 함수들이 들어있다.
+
+① history 키 살펴보기
+
+주소창에 localhost:3000을 입력해서 이동한 다음 아무 영화 카드를 눌러 이동한다. 그럼 다음 [Console] 탭에서 [history]에 출력되는 값을 펼쳐보자
+
+push, go, goBack, goForward 키를 볼 수 있을 것이다.
+
+이 중 지정한 URL로 보내주는 push() 함수를 사용할 것이다.
+
+그 전에, Detail 컴포넌트를 클래스형 컴포넌트로 변경해야 한다. 그래야 componentDidMount() 함수를 사용해 Detial 컴포넌트가 마운트될 때 push() 함수를 실행할 수 있다.
+
+② Detail 컴포넌트 클래스형 컴포넌트로 변경하고 push() 함수 사용
+
+📁 ./src/routes/Detail.js
+```javascript
+import React from 'react';
+
+class Detail extends React.Component {
+  componentDidMount() {
+  // 구조 분해 할당으로 location, history를 얻는다
+    const { location, history }= this.props;
+    // location.state가 없는 경우
+    if (location.state === undefined) {
+      // Home으로 이동
+      history.push('/');
+    }
+  }
+
+  render() {
+    return <span>Hello</span>
+  }
+}
+
+export default Detail;
+```
+
+이제 /movie-detail로 직접 주소를 입력해서 이동하면 다시 Home으로 돌아오게 된다
+
+③ 영화 제목 출력하기
+
+영화 상세 정보 페이지 중에서 제목부터 출력해보자
+
+📁 ./src/routes/Detail.js
+```javascript
+class Detail extends React.Component {
+  //(생략..)
+
+  render() {
+    const { location } = this.props;
+    return <span>{location.state.title}</span>
+  }
+}
+```
+
+이제 첫 화면에서 영화 카드를 누르면 영화 제목이 나타난다
+
+그런데 /movie-detail로 바로 이동하거나 새로고침을 하면 `TypeError: Cannot read property 'title' of undefined` 오류가 발생한다
+
+이 오류의 이유는 Detail 컴포넌트는 `render() → componentDidMount()`의 순서로 함수를 실행하는데, render() 함수 내에서 `location.state.title`을 사용하려 할 때 `location.state`가 undefined이기 때문이다
+
+그러므로 render() 함수에도 componentDidMount() 함수에 작성한 리다이렉트 코드를 추가해줘야 한다
+
+④ render() 함수 수정
+
+📁 ./src/routes/Detail.js
+```javascript
+class Detail extends React.Component {
+  // (생략...)
+
+  render() {
+    const { location } = this.props;
+    if (location.state) {
+      return <span>{location.state.title}</span>
+    } else {
+      return null
+    }
+  }
+}
+```
+
+location.state가 없으면 render() 함수가 null을 반환하도록 만들어서 문제 없이 실행되도록 만든다
+
+그러면 이어서 componentDidMount() 함수가 실행되면서 리다이렉트 기능이 동작하게 된다
